@@ -1,4 +1,4 @@
-export default {
+var app =  {
   template: ['<div class="container">',
     '<div class="channellist__wrap">',
       '<ul class="channellist" :style="channellistStyle">',
