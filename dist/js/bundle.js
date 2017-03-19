@@ -63,7 +63,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 3);
+/******/ 	return __webpack_require__(__webpack_require__.s = 4);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -71,7 +71,65 @@
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__utils_utils_js__ = __webpack_require__(2);
+/* harmony default export */ __webpack_exports__["a"] = {
+  template: ['<div class="container">', '<div class="channellist__wrap">', '<ul class="channellist" :style="channellistStyle">', '<li v-for="channel in channellist"', 'class="channellist__item"', ':class="{active: channel.code == activeChannel}"', '@click.prevent="getChannelList(channel.code)">', '{{channel.title}}', '</li>', '</ul>', '</div>', '<ul class="newslist">', '<li v-for="item in content" class="newslist__item">', '<a :href="item.docurl">', '<figure class="newslist__figure">', '<img :src="item.imgurl" v-lazy class="newslist__image">', '<figcaption class="newslist__title">{{item.title}}</figcaption>', '</figure>', '<footer class="newslist__footer">', '<span class="newslist__channel">{{item.channelname}}</span>', '<time class="newslist__time">{{item.time}}</time>', '</footer>', '</a>', '</li>', '</ul>', '<a class="load-more" @click.prevent="loadMore">加载更多</a>', '</div>'].join(''),
+
+  data: function () {
+    return {
+      content: [],
+      channellist: [{ code: 'war', title: '军事', id: 1 }, { code: 'sport', title: '体育', id: 2 }, { code: 'tech', title: '科技', id: 3 }, { code: 'edu', title: '教育', id: 4 }, { code: 'ent', title: '娱乐', id: 5 }, { code: 'money', title: '财经', id: 6 }, { code: 'gupiao', title: '股票', id: 7 }, { code: 'travel', title: '旅游', id: 8 }, { code: 'lady', title: '女人', id: 9 }],
+      activeChannel: 'war',
+      page: 1,
+      limit: 10,
+      code: 'war'
+    };
+  },
+
+  computed: {
+    URL: function () {
+      return 'http://wangyi.butterfly.mopaasapp.com/news/api?type=' + this.code + '&page=' + this.page + '&limit=' + this.limit;
+    },
+
+    channellistStyle: function () {
+      return {
+        width: 30 * this.channellist.length + 'vw'
+      };
+    }
+  },
+
+  created: function () {
+    this.fetch(this.URL).then(data => this.content = data);
+  },
+
+  methods: {
+    loadMore: function () {
+      this.page++;
+      this.fetch(this.URL).then(data => this.content = this.content.concat(data));
+    },
+
+    getChannelList: function (code) {
+      this.code = code;
+      this.page = 1;
+      this.activeChannel = code;
+      this.fetch(this.URL).then(data => this.content = data);
+    },
+
+    fetch: function (url) {
+      return fetch(url).then(function (res) {
+        return res.json();
+      }).then(function (data) {
+        return data.list;
+      });
+    }
+  }
+};
+
+/***/ }),
+/* 1 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__utils_utils_js__ = __webpack_require__(3);
 
 /*
  * vue-lazyload
@@ -165,6 +223,10 @@ LazyLoad.install = (Vue, options = {}) => {
       Vue.nextTick(() => {
         lazyLoadHandler();
       });
+    },
+
+    update(el) {
+      console.log(el);
     }
   });
 };
@@ -172,7 +234,7 @@ LazyLoad.install = (Vue, options = {}) => {
 /* harmony default export */ __webpack_exports__["a"] = LazyLoad;
 
 /***/ }),
-/* 1 */
+/* 2 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /*!
@@ -7947,7 +8009,7 @@ return Vue$2;
 
 
 /***/ }),
-/* 2 */
+/* 3 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -7989,31 +8051,33 @@ return Vue$2;
 };
 
 /***/ }),
-/* 3 */
+/* 4 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue__ = __webpack_require__(2);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__lazyload_js__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__src_lazyload_js__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__app_js__ = __webpack_require__(0);
+/*
+ * vue lazyload demo
+ * By Gavin
+ */
 
 
 
 
 
 // 引入lazyload插件
-__WEBPACK_IMPORTED_MODULE_0_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_1__lazyload_js__["a" /* default */], {
+__WEBPACK_IMPORTED_MODULE_0_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_1__src_lazyload_js__["a" /* default */], {
   defaultPic: './img/default.png'
 });
 
-const template = '<div class="container">' + '<img src="http://ygres-test.lsh123.com/0acdf2539c8483e69662e7@240h_540w" v-lazy>' + '<img src="http://ygres-test.lsh123.com/3a7a5afc9726cf73ecb58d@240h_540w" v-lazy>' + '<img src="./img/test.png" v-lazy>' + '<img src="http://ygres-test.lsh123.com/fca956e217633d188cde4d@720h_720w" v-lazy>' + '<img src="./img/test.png" v-lazy>' + '<img src="./img/test.png" v-lazy>' + '<img src="./img/test.png" v-lazy>' + '<img src="./img/test.png" v-lazy>' + '<img src="./img/test.png" v-lazy>' + '<img src="./img/test.png" v-lazy>' + '<img src="./img/test.png" v-lazy>' + '<img src="./img/test.png" v-lazy>' + '<img src="./img/test.png" v-lazy>' + '<img src="./img/test.png" v-lazy>' + '<img src="./img/test.png" v-lazy>' + '<img src="./img/test.png" v-lazy>' + '<img src="./img/test.png" v-lazy>' + '<img src="http://ygres-test.lsh123.com/0acdf2539c8483e69662e7@240h_540w" v-lazy>' + '<img src="./img/test.png" v-lazy>' + '<img src="./img/test.png" v-lazy>' + '<img src="./img/test.png" v-lazy>' + '<img src="./img/test.png" v-lazy>' + '<img src="./img/test.png" v-lazy>' + '<img src="./img/test.png" v-lazy>' + '<img src="./img/test.png" v-lazy>' + '<img src="./img/test.png" v-lazy>' + '<img src="./img/test.png" v-lazy>' + '<img src="./img/test.png" v-lazy>' + '<img src="./img/test.png" v-lazy>' + '<img src="./img/test.png" v-lazy>' + '<img src="./img/test.png" v-lazy>' + '<img src="./img/test.png" v-lazy>' + '<img src="./img/test.png" v-lazy>' + '<img src="./img/test.png" v-lazy>' + '<img src="./img/test.png" v-lazy>' + '<img src="./img/test.png" v-lazy>' + '<img src="./img/test.png" v-lazy>' + '<img src="./img/test.png" v-lazy>' + '<img src="./img/test.png" v-lazy>' + '<img src="./img/test.png" v-lazy>' + '<img src="./img/test.png" v-lazy>' + '<img src="./img/test.png" v-lazy>' + '<img src="./img/test.png" v-lazy>' + '<img src="./img/test.png" v-lazy>' + '<img src="./img/test.png" v-lazy>' + '<img src="./img/test.png" v-lazy>' + '<img src="./img/test.png" v-lazy>' + '<img src="./img/test.png" v-lazy>' + '<img src="./img/test.png" v-lazy>' + '<img src="./img/test.png" v-lazy>' + '<img src="./img/test.png" v-lazy>' + '<img src="./img/test.png" v-lazy>';
-'</div>';
-
 // 生成vue实例
-const app = new __WEBPACK_IMPORTED_MODULE_0_vue___default.a({
+new __WEBPACK_IMPORTED_MODULE_0_vue___default.a({
   el: '#app',
-  template: template
+  render: h => h(__WEBPACK_IMPORTED_MODULE_2__app_js__["a" /* default */])
 });
 
 /***/ })
