@@ -75,60 +75,68 @@
 
 /*
  * vue-lazyload
- * 只提供简单的功能
- * 1、设置默认显示图
- * 2、设置父容器
  */
 
 
 
 const LazyLoad = {};
+const win = window;
 
-LazyLoad.install = (Vue, options) => {
+LazyLoad.install = (Vue, options = {}) => {
 
   // 默认值
   let defaults = {
-    defaultPic: ''
+    defaultPic: '',
+    errorPic: '', // 若没有此项，图片加载错误，则依然显示defaultPic的内容
+    onSuccess: () => {},
+    onError: () => {},
+    onComplete: () => {}
   };
 
   // 参数合并
-  defaults = Object.assign({}, defaults, options);
+  defaults = __WEBPACK_IMPORTED_MODULE_0__utils_utils_js__["a" /* default */].extend(defaults, options);
 
   // 图片队列
   const listenerQueue = [];
 
   // 检查图片是否在可视区域内
-  var checkInView = el => {
-    const rect = el.getBoundingClientRect();
-    return rect.top < window.innerHeight && rect.bottom > 0 && rect.left < window.innerWidth && rect.right > 0;
+  const checkInView = __WEBPACK_IMPORTED_MODULE_0__utils_utils_js__["a" /* default */].checkInView;
+
+  // 图片加载状态
+  const STATUS = {
+    loading: 'loading',
+    loaded: 'loaded',
+    error: 'error'
   };
 
   // 图片加载
   // 图片加载过程中给图片相应的状态
   // 前端可以根据状态自定义样式
   // 三个状态：loading、loaded、error
-  // img[lazy="loader"]
-  var load = listerer => {
+  // img[lazy="loaded"] {}
+  const load = listerer => {
     const { el, loaded, sourceSrc } = listerer;
-    const img = new Image();
-    setImageStatus(el, 'loading');
+    const img = new win.Image();
+    setImageStatus(el, STATUS.loading);
     img.src = sourceSrc;
     img.onload = () => {
       el.src = sourceSrc;
-      setImageStatus(el, 'loaded');
+      setImageStatus(el, STATUS.loaded);
       listerer.loaded = true;
+      defaults.onSuccess.call(null, el, listerer);
     };
     img.onerror = () => {
-      setImageStatus(el, 'error');
+      setImageStatus(el, STATUS.error);
       listerer.loaded = false;
+      defaults.onError.call(null, el, listerer);
     };
   };
 
-  var setImageStatus = (el, status) => {
+  const setImageStatus = (el, status) => {
     el.setAttribute('lazy', status);
   };
 
-  var lazyLoadHandler = __WEBPACK_IMPORTED_MODULE_0__utils_utils_js__["a" /* default */].throttle(e => {
+  const lazyLoadHandler = __WEBPACK_IMPORTED_MODULE_0__utils_utils_js__["a" /* default */].throttle(e => {
     let canIn = false;
     listenerQueue.forEach(listerer => {
       if (listerer.loaded) return;
@@ -136,6 +144,10 @@ LazyLoad.install = (Vue, options) => {
       canIn && load(listerer);
     });
   }, 200);
+
+  const initEvent = (() => {
+    win.addEventListener('scroll', lazyLoadHandler);
+  })();
 
   Vue.directive('lazy', {
 
@@ -150,8 +162,9 @@ LazyLoad.install = (Vue, options) => {
         defaultSrc: defaultSrc
       });
 
-      // 事件监听
-      window.addEventListener('scroll', lazyLoadHandler);
+      Vue.nextTick(() => {
+        console.log(el);
+      });
     }
   });
 };
@@ -7939,7 +7952,7 @@ return Vue$2;
 
 "use strict";
 
-var utils = {
+/* harmony default export */ __webpack_exports__["a"] = {
 
   throttle(fn, delay) {
     let timer = null;
@@ -7964,12 +7977,16 @@ var utils = {
     };
   },
 
-  on() {},
+  extend(defaults, options) {
+    return Object.assign({}, defaults, options);
+  },
 
-  off() {}
+  checkInView(el) {
+    const rect = el.getBoundingClientRect();
+    return rect.top < window.innerHeight && rect.bottom > 0 && rect.left < window.innerWidth && rect.right > 0;
+  }
+
 };
-
-/* harmony default export */ __webpack_exports__["a"] = utils;
 
 /***/ }),
 /* 3 */

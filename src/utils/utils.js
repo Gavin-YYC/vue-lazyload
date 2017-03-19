@@ -1,5 +1,5 @@
 
-var utils = {
+export default {
 
   throttle ( fn, delay ) {
     let timer = null;
@@ -24,16 +24,14 @@ var utils = {
     }
   },
 
-
-
-  on () {
-
+  extend( defaults, options ) {
+    return Object.assign( {}, defaults, options );
   },
 
-  off () {
-
+  checkInView ( el ) {
+    const rect = el.getBoundingClientRect();
+    return ( rect.top < window.innerHeight && rect.bottom > 0 ) &&
+           ( rect.left < window.innerWidth && rect.right > 0 );
   }
+
 };
-
-
-export default utils;
