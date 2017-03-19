@@ -1,13 +1,13 @@
 {
   "name": "vue-lazyload",
   "version": "1.0.0",
-  "description": "",
+  "description": "vue lazyload for mobile",
   "main": "",
   "scripts": {
     "build": "NODE_ENV=production rollup --config build.js",
     "dev": "rollup --config build.js"
   },
-  "author": "",
+  "author": "Gavin q414625852@163.com",
   "license": "ISC",
   "devDependencies": {
     "babel-preset-es2015-rollup": "^3.0.0",
