@@ -50,7 +50,7 @@ var app =  {
 
   computed: {
     URL: function () {
-      return 'http://wangyi.butterfly.mopaasapp.com/news/api?type=' + this.code + '&page=' + this.page + '&limit=' + this.limit;
+      return '//wangyi.butterfly.mopaasapp.com/news/api?type=' + this.code + '&page=' + this.page + '&limit=' + this.limit;
     },
 
     channellistStyle: function () {
