@@ -3,9 +3,11 @@ import uglify from 'rollup-plugin-uglify';
 import resolve from 'rollup-plugin-node-resolve';
 import commonjs from 'rollup-plugin-commonjs';
 
+const env = process.env.NODE_ENV;
+
 export default {
   entry: 'src/lazyload.js',
-  dest: 'build/lazyload.js',
+  dest: env === 'production' ? 'build/lazyload.min.js' : 'build/lazyload.js',
   format: 'umd',
   moduleName: 'lazyload',
   plugins: [
@@ -18,6 +20,6 @@ export default {
       browser: true,
     }),
     commonjs(),
-    uglify()
+    (env === 'production' && uglify())
   ]
 };
