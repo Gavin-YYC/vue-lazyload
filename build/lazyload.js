@@ -131,9 +131,7 @@ LazyLoad.install = function (Vue) {
         lazyLoadHandler();
       });
     },
-    update: function update(el) {
-      console.log(el);
-    }
+    update: function update(el) {}
   });
 };
 

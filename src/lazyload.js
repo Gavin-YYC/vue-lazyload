@@ -95,9 +95,7 @@ LazyLoad.install = ( Vue, options = {} ) => {
       });
     },
 
-    update ( el ) {
-      console.log( el );
-    }
+    update ( el ) {}
   });
 }
 
