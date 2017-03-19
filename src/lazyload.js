@@ -91,7 +91,7 @@ LazyLoad.install = ( Vue, options = {} ) => {
       });
 
       Vue.nextTick(() => {
-        console.log( el );
+        lazyLoadHandler();
       });
     }
   });
