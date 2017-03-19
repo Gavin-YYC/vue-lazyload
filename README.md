@@ -1,5 +1,15 @@
 ## VUE 图片懒加载
 
+### DEMO
+
+用手机预览模式看：
+
+https://gavin-yyc.github.io/vue-lazyload/demo/index.html
+
+或扫码：
+
+![w200](http://img.youthol.top/eb2914ce57371d3b2951fc9e056bb3f4.png)
+
 ### 使用
 
 ```javascript
