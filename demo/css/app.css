@@ -17,7 +17,8 @@
   height: 15vh;
 }
 .newslist__image[lazy="loaded"] {
-  animation: fadeIn 0.5s ease-in;
+  transform: matrix3d(0.8, 0, 0, 0, 0, 0.8, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1);
+  transition: opacity 0.8s cubic-bezier(0.6, 0.2, 0.1, 1) 0s, transform 0.8s cubic-bezier(0.6, 0.2, 0.1, 1) 0s;
 }
 .newslist__title {
   width: 58vw;
@@ -64,14 +65,4 @@
 }
 .channellist__item:nth-last-child(1) {
   border-right: none;
-}
-@keyframes fadeIn {
-  0% {
-    opacity: 0;
-    transform: translateX(-300px);
-  }
-  100% {
-    opacity: 1;
-    transform: translateX(0);
-  }
 }
