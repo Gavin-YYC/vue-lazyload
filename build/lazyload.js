@@ -115,23 +115,21 @@ LazyLoad.install = function (Vue) {
     win.addEventListener('scroll', lazyLoadHandler);
   }();
 
-  Vue.directive('lazy', {
-    bind: function bind(el) {
-      var defaultSrc = defaults.defaultPic;
-      var sourceSrc = el.getAttribute('src');
-      el.src = defaultSrc;
-      listenerQueue.push({
-        loaded: false,
-        el: el,
-        sourceSrc: sourceSrc,
-        defaultSrc: defaultSrc
-      });
+  Vue.directive('lazy', function (el) {
+    var defaultSrc = defaults.defaultPic;
+    var sourceSrc = el.getAttribute('src');
+    el.src = defaultSrc;
+    listenerQueue.push({
+      loaded: false,
+      el: el,
+      sourceSrc: sourceSrc,
+      defaultSrc: defaultSrc
+    });
 
-      Vue.nextTick(function () {
-        lazyLoadHandler();
-      });
-    },
-    update: function update(el) {}
+    // DOM更新后立即执行
+    Vue.nextTick(function () {
+      lazyLoadHandler();
+    });
   });
 };
 

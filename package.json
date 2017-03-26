@@ -5,7 +5,7 @@
   "main": "",
   "scripts": {
     "build": "NODE_ENV=production rollup --config build.js",
-    "dev": "rollup --config build.js"
+    "dev": "rollup --config build.js -w"
   },
   "author": "Gavin q414625852@163.com",
   "license": "ISC",
@@ -14,6 +14,7 @@
     "rollup-plugin-babel": "^2.7.1",
     "rollup-plugin-commonjs": "^8.0.2",
     "rollup-plugin-node-resolve": "^2.0.0",
-    "rollup-plugin-uglify": "^1.0.1"
+    "rollup-plugin-uglify": "^1.0.1",
+    "rollup-watch": "^3.2.2"
   }
 }
