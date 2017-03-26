@@ -53,11 +53,13 @@
   display: flex;
   flex-direction: row;
   border-bottom: 1px dashed #ccc;
+  white-space: nowrap;
 }
 .channellist__item {
   width: 30vw;
   line-height: 5vh;
   text-align: center;
+  padding: 0 5vw;
   border-right: 1px dashed #ccc;
 }
 .channellist__item.active {

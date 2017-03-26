@@ -1,7 +1,7 @@
 var app =  {
   template: ['<div class="container">',
     '<div class="channellist__wrap">',
-      '<ul class="channellist" :style="channellistStyle">',
+      '<ul class="channellist">',
         '<li v-for="channel in channellist"',
             'class="channellist__item"',
             ':class="{active: channel.code == activeChannel}"',
@@ -51,12 +51,6 @@ var app =  {
   computed: {
     URL: function () {
       return 'https://wangyi.butterfly.mopaasapp.com/news/api?type=' + this.code + '&page=' + this.page + '&limit=' + this.limit;
-    },
-
-    channellistStyle: function () {
-      return {
-        width: 30 * this.channellist.length + 'vw'
-      }
     }
   },
 
