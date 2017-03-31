@@ -14,7 +14,7 @@ var app =  {
       '<li v-for="item in content" class="newslist__item">',
         '<a :href="item.docurl">',
           '<figure class="newslist__figure">',
-            '<img :src="item.imgurl" v-lazy class="newslist__image">',
+            '<img v-lazy.background-image="item.imgurl" class="newslist__image">',
             '<figcaption class="newslist__title">{{item.title}}</figcaption>',
           '</figure>',
           '<footer class="newslist__footer">',

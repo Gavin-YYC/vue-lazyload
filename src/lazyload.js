@@ -77,9 +77,10 @@ LazyLoad.install = ( Vue, options = {} ) => {
     win.addEventListener('scroll', lazyLoadHandler);
   })();
 
-  Vue.directive('lazy', el => {
+  Vue.directive('lazy', ( el, binding ) => {
+
     const defaultSrc = defaults.defaultPic;
-    const sourceSrc = el.getAttribute('src');
+    const sourceSrc = binding.value;
     el.src = defaultSrc;
     listenerQueue.push({
       loaded: false,
