@@ -80,13 +80,15 @@ LazyLoad.install = function (Vue) {
   var load = function load(listerer) {
     var el = listerer.el,
         loaded = listerer.loaded,
-        sourceSrc = listerer.sourceSrc;
+        sourceSrc = listerer.sourceSrc,
+        isSetBackground = listerer.isSetBackground;
 
     var img = new win.Image();
     setImageStatus(el, STATUS.loading);
     img.src = sourceSrc;
     img.onload = function () {
       el.src = sourceSrc;
+      setImage(el, isSetBackground, sourceSrc);
       setImageStatus(el, STATUS.loaded);
       listerer.loaded = true;
       defaults.onSuccess.call(null, el, listerer);
@@ -111,21 +113,31 @@ LazyLoad.install = function (Vue) {
     });
   }, 200);
 
+  var setImage = function setImage(el, isSetBackground, defaultPic) {
+    if (!isSetBackground) {
+      el.src = defaultPic;
+    } else {
+      el.style.backgroundImage = 'url(' + defaultPic + ')';
+    }
+  };
+
   var initEvent = function () {
     win.addEventListener('scroll', lazyLoadHandler);
   }();
 
   Vue.directive('lazy', function (el, binding) {
     // DOM更新前后值不同时更新图片
+    var IS_SET_BACKGROUND = !!binding.modifiers.background;
+    var DEFAULT_PIC = defaults.defaultPic;
+    var SOURCE_PIC = binding.value;
     if (binding.value !== binding.oldValue) {
-      var defaultSrc = defaults.defaultPic;
-      var sourceSrc = binding.value;
-      el.src = defaultSrc;
+      setImage(el, IS_SET_BACKGROUND, DEFAULT_PIC);
       listenerQueue.push({
         loaded: false,
         el: el,
-        sourceSrc: sourceSrc,
-        defaultSrc: defaultSrc
+        isSetBackground: IS_SET_BACKGROUND,
+        sourceSrc: SOURCE_PIC,
+        defaultSrc: DEFAULT_PIC
       });
 
       // DOM更新后立即执行

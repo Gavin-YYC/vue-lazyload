@@ -28,7 +28,11 @@ Vue.use( lazyload, {
 });
 
 // last use case
+// image
 <img v-lazy="item.imgurl">
+
+// background
+<div v-lazy.background="item.imgurl"></div>
 ```
 
 ### Build Project
