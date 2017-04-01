@@ -116,21 +116,23 @@ LazyLoad.install = function (Vue) {
   }();
 
   Vue.directive('lazy', function (el, binding) {
+    // DOM更新前后值不同时更新图片
+    if (binding.value !== binding.oldValue) {
+      var defaultSrc = defaults.defaultPic;
+      var sourceSrc = binding.value;
+      el.src = defaultSrc;
+      listenerQueue.push({
+        loaded: false,
+        el: el,
+        sourceSrc: sourceSrc,
+        defaultSrc: defaultSrc
+      });
 
-    var defaultSrc = defaults.defaultPic;
-    var sourceSrc = binding.value;
-    el.src = defaultSrc;
-    listenerQueue.push({
-      loaded: false,
-      el: el,
-      sourceSrc: sourceSrc,
-      defaultSrc: defaultSrc
-    });
-
-    // DOM更新后立即执行
-    Vue.nextTick(function () {
-      lazyLoadHandler();
-    });
+      // DOM更新后立即执行
+      Vue.nextTick(function () {
+        lazyLoadHandler();
+      });
+    }
   });
 };
 
